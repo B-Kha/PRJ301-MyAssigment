@@ -15,7 +15,8 @@
     <div class="home-container">
         <h2>Home Page</h2>
         <p>Welcome to Factory!</p>
-        <a href="productionplan/create">Create new plan </a>
+        <a href="productionplan/create">Create new plan </a> <br/>
+        <a href="sdeplant/create">Create new Campain </a>
         <form action="logout" method="post">
             <button type="submit">Logout</button>
         </form>
