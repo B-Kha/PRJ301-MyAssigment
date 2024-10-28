@@ -78,7 +78,28 @@ public class DepartmentDBContext extends DBContext<Department>{
 
     @Override
     public Department get(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       Department department = null;
+        try {
+            String sql = "SELECT * FROM [Department] WHERE id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                department = new Department();
+                department.setId(rs.getInt("id"));
+                department.setName(rs.getString("name"));
+                // Gán các thuộc tính khác nếu cần
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DepartmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DepartmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return department;
     }
     
 }

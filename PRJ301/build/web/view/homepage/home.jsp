@@ -16,7 +16,9 @@
         <h2>Home Page</h2>
         <p>Welcome to Factory!</p>
         <a href="productionplan/create">Create new plan </a> <br/>
-        <a href="sdeplant/create">Create new Campain </a>
+        <a href="productionplan/list">List all Plan</a> <br>
+        <a href="sdeplant/create">Create new Campain </a> <br/>
+        <a href="sdeplant/list">List all Campain</a> <br/>
         <form action="logout" method="post">
             <button type="submit">Logout</button>
         </form>
