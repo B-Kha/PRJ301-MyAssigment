@@ -4,30 +4,29 @@
     Author     : Laptop Acer
 --%>
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Create Schedule</title>
+    <title>Tạo mới Sdeplant Campaign</title>
 </head>
 <body>
-    <div class="create-container">
-        <h2>Create Schedule for Compain</h2>
-        <form action="create" method="post">
-            <label for="planCampainId">PlanCampain ID:</label>
-            <input type="text" id="planCampainId" name="planCampainId" required>
-            <br>
-            <label for="date">Date (yyyy-MM-dd):</label>
-            <input type="date" id="date" name="date" required pattern="\d{4}-\d{2}-\d{2}">
-            <br>
-            <label for="K">K:</label>
-            <input type="text" id="K" name="K" required>
-            <br>
-            <label for="quantity">Quantity:</label>
-            <input type="text" id="quantity" name="quantity" required>
-            <br>
-            <button type="submit">Create</button>
-        </form>
-    </div>
+    <h2>Tạo mới Sdeplant Campaign</h2>
+    <form action="${pageContext.request.contextPath}/sdeplant/create" method="post">
+        <label for="comid">ComID:</label>
+        <input type="number" id="comid" name="comid" required><br>
+
+        <label for="date">Ngày:</label>
+        <input type="date" id="date" name="date" required><br>
+
+        <label for="k">K:</label>
+        <input type="text" id="k" name="k" required><br>
+
+        <label for="quantity">Số lượng:</label>
+        <input type="number" id="quantity" name="quantity" required><br>
+
+        <button type="submit">Tạo mới</button>
+    </form>
 </body>
 </html>
