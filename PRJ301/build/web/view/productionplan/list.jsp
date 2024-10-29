@@ -1,13 +1,10 @@
 <%-- 
     Document   : list
-    Created on : Oct 28, 2024, 5:23:02 PM
+    Created on : Oct 29, 2024, 1:34:59 PM
     Author     : Laptop Acer
 --%>
-
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="model.Plan" %>
-<%@ page import="model.Department" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -15,29 +12,31 @@
     <title>List Plan</title>
 </head>
 <body>
-    <div class="list-container">
-        <h2>List Plan</h2>
-        <table border="1">
+    <h2>List Plan</h2>
+    <table border="1">
+        <thead>
             <tr>
-                <th>PLID</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Department ID</th>
+                <th>ID</th>
+                <th>Ngày bắt đầu</th>
+                <th>Ngày kết thúc</th>
+                <th>Phòng ban (ID)</th>
+                <th>Hành động</th> <!-- Thêm cột hành động -->
             </tr>
-            <%
-                ArrayList<Plan> plans = (ArrayList<Plan>) request.getAttribute("plans");
-                for (Plan plan : plans) {
-            %>
-            <tr>
-                <td><%= plan.getId() %></td>
-                <td><%= plan.getStart() %></td>
-                <td><%= plan.getEnd() %></td>
-                <td><%= plan.getDept().getId() %></td>
-            </tr>
-            <%
-                }
-            %>
-        </table>
-    </div>
+        </thead>
+        <tbody>
+            <c:forEach var="plan" items="${plans}">
+                <tr>
+                    <td>${plan.id}</td>
+                    <td>${plan.start}</td>
+                    <td>${plan.end}</td>
+                    <td>${plan.dept.id}</td>
+                    <td>
+                        <a href="${pageContext.request.contextPath}/plan/update?id=${plan.id}">Cập nhật</a> |
+                        <a href="${pageContext.request.contextPath}/plan/delete?id=${plan.id}">Xóa</a> <!-- Thêm link xóa -->
+                    </td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
 </body>
 </html>

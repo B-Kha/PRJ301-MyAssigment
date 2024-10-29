@@ -15,10 +15,10 @@
     <div class="home-container">
         <h2>Home Page</h2>
         <p>Welcome to Factory!</p>
-        <a href="productionplan/create">Create new plan </a> <br/>
-        <a href="productionplan/list">List all Plan</a> <br>
-        <a href="sdeplant/create">Create new Campain </a> <br/>
-        <a href="sdeplant/list">List all Campain</a> <br/>
+      <a href="<%= request.getContextPath() %>/productionplan/create">Create new plan</a><br/>
+<a href="<%= request.getContextPath() %>/sdeplant/create">Create new Campaign</a><br/>
+<a href="<%= request.getContextPath() %>/sdeplant/list">List all Campaign</a><br/>
+<a href="<%= request.getContextPath() %>/plan/viewList">List all Plans</a>
         <form action="logout" method="post">
             <button type="submit">Logout</button>
         </form>
