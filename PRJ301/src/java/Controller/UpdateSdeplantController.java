@@ -17,7 +17,9 @@ import jakarta.servlet.http.HttpSession;
 import java.text.ParseException;
 import model.Sdeplant;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.sql.Date;
 import model.PlanCampain;
 
 /**
@@ -33,57 +35,50 @@ public class UpdateSdeplantController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute("account") != null) {
-            int scid = Integer.parseInt(request.getParameter("scid"));
-            SdeplantDBContext db = new SdeplantDBContext();
-            Sdeplant sdeplant = db.get(scid); // Giả sử bạn có phương thức get(int scid) trong SdeplantDBContext để lấy dữ liệu của một campain.
-            request.setAttribute("sdeplant", sdeplant);
-            request.getRequestDispatcher("../view/sdeplant/update.jsp").forward(request, response);
-        } else {
-            response.sendRedirect("../login.html");
+         if (request.getSession().getAttribute("account") == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
         }
+
+        // Lấy ID của Sdeplant từ tham số
+        int scid = Integer.parseInt(request.getParameter("scid"));
+        
+        // Lấy Sdeplant từ cơ sở dữ liệu
+        SdeplantDBContext db = new SdeplantDBContext();
+        Sdeplant sdeplant = db.get(scid);
+        
+        // Gửi Sdeplant đến trang update.jsp
+        request.setAttribute("sdeplant", sdeplant);
+        request.getRequestDispatcher("/view/sdeplant/update.jsp").forward(request, response);
     } 
 
    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute("account") != null) {
-            int scid = Integer.parseInt(request.getParameter("scid"));
-            int planCampainId = Integer.parseInt(request.getParameter("planCampainId"));
-            String dateString = request.getParameter("date");
-            String K = request.getParameter("K");
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
+        int scid = Integer.parseInt(request.getParameter("scid"));
+        int comid = Integer.parseInt(request.getParameter("comid"));
+        LocalDate localDate = LocalDate.parse(request.getParameter("date"));
+        Date date = Date.valueOf(localDate);
+        String k = request.getParameter("k");
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = null;
-            try {
-                date = formatter.parse(dateString);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+        // Tạo đối tượng Sdeplant và thiết lập các thuộc tính
+        Sdeplant sdeplant = new Sdeplant();
+        sdeplant.setId(scid);
+        PlanCampain planCampain = new PlanCampain();
+        planCampain.setId(comid);
+        sdeplant.setPlanCampain(planCampain);
+        sdeplant.setDate(date);
+        sdeplant.setK(k);
+        sdeplant.setQuantity(quantity);
 
-            if (date != null) {
-                Sdeplant sdeplant = new Sdeplant();
-                sdeplant.setId(scid);
-                PlanCampain planCampain = new PlanCampain();
-                planCampain.setId(planCampainId);
-                sdeplant.setPlanCampain(planCampain);
-                sdeplant.setDate(date);
-                sdeplant.setK(K);
-                sdeplant.setQuantity(quantity);
+        // Cập nhật dữ liệu vào cơ sở dữ liệu
+        SdeplantDBContext db = new SdeplantDBContext();
+        db.update(sdeplant);
 
-                SdeplantDBContext db = new SdeplantDBContext();
-                db.update(sdeplant);
-                response.getWriter().println("updated the schedule!");
-            } else {
-                response.getWriter().println("Error: Invalid date format.");
-            }
-        } else {
-            response.sendRedirect("../  login.html");
-        }
+        // Chuyển hướng về trang danh sách sau khi cập nhật
+        response.sendRedirect(request.getContextPath() + "/sdeplant/list");
     }
 
     /** 

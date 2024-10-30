@@ -4,42 +4,53 @@
     Author     : Laptop Acer
 --%>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.Sdeplant" %>
+<%@ page import="model.Sdeplant" %> <!-- Thay đổi theo package thực tế -->
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>List Campain</title>
+    <title>List Sdeplant Campaigns</title>
 </head>
 <body>
-    <div class="list-container">
-        <h2>List Campain</h2>
+    <h2>List Schedue plant Campaigns</h2>
+
+    <%
+        ArrayList<Sdeplant> sdeplants = (ArrayList<Sdeplant>) request.getAttribute("sdeplants");
+        if (sdeplants == null || sdeplants.isEmpty()) {
+            out.println("<p>Không có dữ liệu để hiển thị.</p>");
+        } else {
+    %>
         <table border="1">
             <tr>
-                <th>SCID</th>
-                <th>ComID</th>
+                <th>ID</th>
                 <th>Date</th>
                 <th>K</th>
                 <th>Quantity</th>
+                <th>ComID</th>
+                <th>Actions</th>
             </tr>
             <%
-                ArrayList<Sdeplant> sdeplants = (ArrayList<Sdeplant>) request.getAttribute("sdeplants");
                 for (Sdeplant s : sdeplants) {
             %>
             <tr>
                 <td><%= s.getId() %></td>
-                <td><%= s.getPlanCampain().getId() %></td>
                 <td><%= s.getDate() %></td>
                 <td><%= s.getK() %></td>
                 <td><%= s.getQuantity() %></td>
-                <td><a href="update?scid=<%= s.getId() %>">Update</a></td>
+                <td><%= s.getPlanCampain().getId() %></td>
+                <td>
+                    <a href="${pageContext.request.contextPath}/sdeplant/update?scid=<%= s.getId() %>">Update</a> |
+                    <a href="${pageContext.request.contextPath}/sdeplant/delete?scid=<%= s.getId() %>" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
+                </td>
             </tr>
             <%
                 }
             %>
         </table>
-    </div>
+    <%
+        }
+    %>
 </body>
 </html>

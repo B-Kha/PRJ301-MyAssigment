@@ -32,41 +32,47 @@ public class CreateSdeplantController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-      // Kiểm tra session xem người dùng đã đăng nhập chưa
-        if (request.getSession().getAttribute("account") == null) {
+       if (request.getSession().getAttribute("account") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
-        // Điều hướng đến trang tạo mới Sdeplant_campain nếu người dùng đã đăng nhập
-        request.getRequestDispatcher("/view/productionplan/sdeplant/create.jsp").forward(request, response);   
+        // Điều hướng đến trang tạo mới Sdeplant nếu người dùng đã đăng nhập
+        request.getRequestDispatcher("/view/sdeplant/create.jsp").forward(request, response);
 }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-          // Lấy thông tin từ form
-        int comid = Integer.parseInt(request.getParameter("comid"));
-        Date date = Date.valueOf(request.getParameter("date"));
-        String k = request.getParameter("k");
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
+             try {
+            // Lấy thông tin từ form
+            int comid = Integer.parseInt(request.getParameter("comid"));
+            Date date = Date.valueOf(request.getParameter("date"));
+            String k = request.getParameter("k");
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-        // Tạo PlanCampain với comid
-        PlanCampain planCampain = new PlanCampain();
-        planCampain.setId(comid);
+            // Tạo PlanCampain với comid
+            PlanCampain planCampain = new PlanCampain();
+            planCampain.setId(comid);
 
-        // Tạo Sdeplant và thiết lập các thuộc tính
-        Sdeplant sdeplant = new Sdeplant();
-        sdeplant.setPlanCampain(planCampain);
-        sdeplant.setDate(date);
-        sdeplant.setK(k);
-        sdeplant.setQuantity(quantity);
+            // Tạo Sdeplant và thiết lập các thuộc tính
+            Sdeplant sdeplant = new Sdeplant();
+            sdeplant.setPlanCampain(planCampain);
+            sdeplant.setDate(date);
+            sdeplant.setK(k);
+            sdeplant.setQuantity(quantity);
 
-        // Thêm vào cơ sở dữ liệu
-        SdeplantDBContext db = new SdeplantDBContext();
-        db.insert(sdeplant);
+            // Thêm vào cơ sở dữ liệu
+            SdeplantDBContext db = new SdeplantDBContext();
+            db.insert(sdeplant);
 
-        // Chuyển hướng về trang danh sách Sdeplant hoặc trang chủ
-        response.sendRedirect(request.getContextPath() + "/view/productionplan/sdeplant/list.jsp");
+            // Gửi thông báo thành công tới trang create.jsp
+            request.setAttribute("message", "Create thành công!");
+            request.getRequestDispatcher("/view/sdeplant/create.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.getWriter().println("Đã xảy ra lỗi khi tạo Sdeplant mới.");
+        }
+    
     }
 
    

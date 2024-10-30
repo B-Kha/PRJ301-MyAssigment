@@ -13,18 +13,29 @@
 </head>
 <body>
     <h2>Tạo mới Sdeplant Campaign</h2>
+    
+    <!-- Hiển thị thông báo thành công nếu có -->
+    <%
+        String message = (String) request.getAttribute("message");
+        if (message != null) {
+    %>
+        <p style="color:green;"><%= message %></p>
+    <%
+        }
+    %>
+    
     <form action="${pageContext.request.contextPath}/sdeplant/create" method="post">
         <label for="comid">ComID:</label>
-        <input type="number" id="comid" name="comid" required><br>
+        <input type="number" id="comid" name="comid" required><br/>
 
         <label for="date">Ngày:</label>
-        <input type="date" id="date" name="date" required><br>
+        <input type="date" id="date" name="date" required><br/>
 
         <label for="k">K:</label>
-        <input type="text" id="k" name="k" required><br>
+        <input type="text" id="k" name="k" required><br/>
 
         <label for="quantity">Số lượng:</label>
-        <input type="number" id="quantity" name="quantity" required><br>
+        <input type="number" id="quantity" name="quantity" required><br/>
 
         <button type="submit">Tạo mới</button>
     </form>

@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controller;
 
 import dal.SdeplantDBContext;
@@ -13,48 +12,47 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
 import model.Sdeplant;
 
 /**
  *
  * @author Laptop Acer
  */
-@WebServlet(name="ListSdeplantController", urlPatterns={"/sdeplant/list"})
-public class ListSdeplantController extends HttpServlet {
-   
- 
+@WebServlet(name = "DeleteSdeplantController", urlPatterns = {"/sdeplant/delete"})
+public class DeleteSdeplantController extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-         if (request.getSession().getAttribute("account") == null) {
+            throws ServletException, IOException {
+        if (request.getSession().getAttribute("account") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
-        // Lấy danh sách Sdeplant từ cơ sở dữ liệu
+        // Lấy ID của Sdeplant từ tham số
+        int scid = Integer.parseInt(request.getParameter("scid"));
+
+        // Tạo đối tượng Sdeplant và gọi phương thức delete trong SdeplantDBContext
+        Sdeplant sdeplant = new Sdeplant();
+        sdeplant.setId(scid);
+
         SdeplantDBContext db = new SdeplantDBContext();
-        ArrayList<Sdeplant> sdeplants = db.list();
+        db.delete(sdeplant);
 
-        // Đặt thuộc tính "sdeplants" vào request để gửi sang JSP
-        request.setAttribute("sdeplants", sdeplants);
+        // Chuyển hướng về trang danh sách sau khi xóa
+        response.sendRedirect(request.getContextPath() + "/sdeplant/list");
 
-        // Chuyển hướng đến list.jsp để hiển thị danh sách
-        request.getRequestDispatcher("/view/sdeplant/list.jsp").forward(request, response);
     }
 
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-      
+            throws ServletException, IOException {
+
     }
 
-  
     @Override
     public String getServletInfo() {
-        return "ListSdeplantController";
+        return "Short description";
     }// </editor-fold>
 
 }

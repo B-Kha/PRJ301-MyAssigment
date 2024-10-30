@@ -4,36 +4,42 @@
     Author     : Laptop Acer
 --%>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="model.Sdeplant" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Update Campain</title>
+    <title>Update Sdeplant</title>
 </head>
 <body>
-    <div class="update-container">
-        <h2>Update Campain</h2>
-        <%
-            Sdeplant sdeplant = (Sdeplant) request.getAttribute("sdeplant");
-        %>
-        <form action="update" method="post">
-            <input type="hidden" name="scid" value="<%= sdeplant.getId() %>">
-            <label for="planCampainId">PlanCampain ID:</label>
-            <input type="text" id="planCampainId" name="planCampainId" required value="<%= sdeplant.getPlanCampain().getId() %>">
-            <br>
-            <label for="date">Date (yyyy-MM-dd):</label>
-            <input type="text" id="date" name="date" required value="<%= sdeplant.getDate() %>">
-            <br>
-            <label for="K">K:</label>
-            <input type="text" id="K" name="K" required value="<%= sdeplant.getK() %>">
-            <br>
-            <label for="quantity">Quantity:</label>
-            <input type="text" id="quantity" name="quantity" required value="<%= sdeplant.getQuantity() %>">
-            <br>
-            <button type="submit">Update</button>
-        </form>
-    </div>
+    <h2>Update Sdeplant</h2>
+
+    <%
+        Sdeplant sdeplant = (Sdeplant) request.getAttribute("sdeplant");
+        if (sdeplant == null) {
+            out.println("<p>Sdeplant không tồn tại!</p>");
+        } else {
+    %>
+    <form action="${pageContext.request.contextPath}/sdeplant/update" method="post">
+        <input type="hidden" name="scid" value="<%= sdeplant.getId() %>" />
+
+        <label for="comid">ComID:</label>
+        <input type="number" id="comid" name="comid" value="<%= sdeplant.getPlanCampain().getId() %>" required><br/>
+
+        <label for="date">Ngày:</label>
+        <input type="date" id="date" name="date" value="<%= sdeplant.getDate() %>" required><br/>
+
+        <label for="k">K:</label>
+        <input type="text" id="k" name="k" value="<%= sdeplant.getK() %>" required><br/>
+
+        <label for="quantity">Số lượng:</label>
+        <input type="number" id="quantity" name="quantity" value="<%= sdeplant.getQuantity() %>" required><br/>
+
+        <button type="submit">Update</button>
+    </form>
+    <%
+        }
+    %>
 </body>
 </html>
