@@ -26,19 +26,24 @@ public class ListPlanController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         HttpSession session = request.getSession(false);
-
-        if (session != null && session.getAttribute("account") != null) {
-            PlanDBContext db = new PlanDBContext();
-            ArrayList<Plan> plans = db.list();
-            request.setAttribute("plans", plans);
-            request.getRequestDispatcher("../view/productionplan/list.jsp").forward(request, response);
-        } else {
-            response.sendRedirect(request.getContextPath() + "/login.html");
+        if (request.getSession().getAttribute("account") == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
         }
-    
+
+        PlanDBContext planDB = new PlanDBContext();
+        ArrayList<Plan> plans = planDB.list();
+
+        // Kiểm tra xem danh sách plans có dữ liệu không
+        System.out.println("Number of plans: " + plans.size());
+        for (Plan plan : plans) {
+            System.out.println("Plan ID: " + plan.getId() + ", Start: " + plan.getStart() + ", End: " + plan.getEnd());
+        }
+
+        request.setAttribute("plans", plans);
+        request.getRequestDispatcher("/view/productionplan/list.jsp").forward(request, response);
+
     }
-    
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

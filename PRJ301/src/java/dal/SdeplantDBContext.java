@@ -147,4 +147,32 @@ public class SdeplantDBContext extends DBContext<Sdeplant> {
         return sdeplant;
     }
 
+   public ArrayList<Sdeplant> getSdeplantsByDateRange(Date startDate, Date endDate) {
+        ArrayList<Sdeplant> sdeplants = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM Sdeplant_campain WHERE date BETWEEN ? AND ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setDate(1, startDate);
+            stm.setDate(2, endDate);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Sdeplant sdeplant = new Sdeplant();
+                sdeplant.setId(rs.getInt("scid"));
+                sdeplant.setDate(rs.getDate("date"));
+                sdeplant.setK(rs.getString("K"));
+                sdeplant.setQuantity(rs.getInt("Quantity"));
+
+                PlanCampain planCampain = new PlanCampain();
+                planCampain.setId(rs.getInt("comid"));
+                sdeplant.setPlanCampain(planCampain);
+
+                sdeplants.add(sdeplant);
+            }
+            rs.close();
+            stm.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(SdeplantDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return sdeplants;
+    }
 }
