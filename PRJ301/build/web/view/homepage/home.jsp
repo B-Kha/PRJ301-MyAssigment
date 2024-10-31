@@ -18,7 +18,9 @@
             <a href="<%= request.getContextPath() %>/productionplan/create">Create new plan</a><br/>
             <a href="${pageContext.request.contextPath}/sdeplant/create">Create Schedueplant Campaign</a> <br/>
            <a href="${pageContext.request.contextPath}/sdeplant/list">List All Sdeplant Campaigns</a><br/>
-            <a href="<%= request.getContextPath() %>/plan/viewList">List all Plans</a>
+            <a href="<%= request.getContextPath() %>/plan/viewList">List all Plans</a> <br/>
+            <a href="${pageContext.request.contextPath}/create/employee">Create New Employee</a> <br/>
+             <a href="<%= request.getContextPath() %>/list/employee">List of Employees</a><br/>
             <form action="logout" method="post">
                 <button type="submit">Logout</button>
             </form>
