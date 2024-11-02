@@ -21,6 +21,7 @@
             <a href="<%= request.getContextPath() %>/plan/viewList">List all Plans</a> <br/>
             <a href="${pageContext.request.contextPath}/create/employee">Create New Employee</a> <br/>
              <a href="<%= request.getContextPath() %>/list/employee">List of Employees</a><br/>
+            <a href="<%= request.getContextPath() %>/create/workerschedule">Create Worker Schedule</a><br/>
             <form action="logout" method="post">
                 <button type="submit">Logout</button>
             </form>
