@@ -15,13 +15,19 @@
         <div class="home-container">
             <h2>Home Page</h2>
             <p>Welcome to Factory!</p>
-            <a href="<%= request.getContextPath() %>/productionplan/create">Create new plan</a><br/>
-            <a href="${pageContext.request.contextPath}/sdeplant/create">Create Schedueplant Campaign</a> <br/>
-           <a href="${pageContext.request.contextPath}/sdeplant/list">List All Sdeplant Campaigns</a><br/>
-            <a href="<%= request.getContextPath() %>/plan/viewList">List all Plans</a> <br/>
-            <a href="${pageContext.request.contextPath}/create/employee">Create New Employee</a> <br/>
-             <a href="<%= request.getContextPath() %>/list/employee">List of Employees</a><br/>
-            <a href="<%= request.getContextPath() %>/create/workerschedule">Create Worker Schedule</a><br/>
+            
+            <div class="links-container">
+                <a href="<%= request.getContextPath() %>/productionplan/create">Create new plan</a>
+                <a href="${pageContext.request.contextPath}/sdeplant/create">Create Schedueplant Campaign</a>
+                <a href="${pageContext.request.contextPath}/sdeplant/list">List All Sdeplant Campaigns</a>
+                <a href="<%= request.getContextPath() %>/plan/viewList">List all Plans</a>
+                <a href="${pageContext.request.contextPath}/create/employee">Create New Employee</a>
+                <a href="<%= request.getContextPath() %>/list/employee">List of Employees</a>
+                <a href="<%= request.getContextPath() %>/workerschedule/create">Create new Schedule</a>
+                <a href="<%= request.getContextPath() %>/workerschedule/list">List of Worker Schedules</a>
+                <a href="<%= request.getContextPath() %>/plancampain/list">List of PlanCampain</a>
+            </div>
+            
             <form action="logout" method="post">
                 <button type="submit">Logout</button>
             </form>

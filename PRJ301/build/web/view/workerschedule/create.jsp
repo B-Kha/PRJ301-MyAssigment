@@ -1,38 +1,31 @@
 <%-- 
     Document   : create
-    Created on : Nov 1, 2024, 10:27:25 PM
+    Created on : Nov 4, 2024, 1:17:10 AM
     Author     : Laptop Acer
 --%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-    <title>Create Worker Schedule</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo WorkerSchedule</title>
 </head>
 <body>
-    <h2>Create Worker Schedule</h2>
-
-    <c:if test="${not empty message}">
-        <p style="color:green;">${message}</p>
-    </c:if>
-    <c:if test="${not empty error}">
-        <p style="color:red;">${error}</p>
-    </c:if>
-
-   <form action="<%= request.getContextPath() %>/create/workerschedule" method="POST">
-        <label for="scid">Schedule Campaign ID:</label>
-        <input type="number" id="scid" name="scid" required><br><br>
-
-        <label for="eid">Employee ID:</label>
-        <input type="number" id="eid" name="eid" required><br><br>
-
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity" required><br><br>
-
-        <input type="submit" value="Create Schedule">
-    </form>
+    <div class="create-container">
+        <h2>Tạo WorkerSchedule</h2>
+        <form action="create" method="post">
+            <label for="scid">Schedule Campaign ID:</label>
+            <input type="text" id="scid" name="scid" required>
+            <br>
+            <label for="eid">Employee ID:</label>
+            <input type="text" id="eid" name="eid" required>
+            <br>
+            <label for="quantity">Quantity:</label>
+            <input type="text" id="quantity" name="quantity" required>
+            <br>
+            <button type="submit">Tạo WorkerSchedule</button>
+        </form>
+    </div>
 </body>
 </html>

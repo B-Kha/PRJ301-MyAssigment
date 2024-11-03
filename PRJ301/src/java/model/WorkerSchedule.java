@@ -10,8 +10,8 @@ package model;
  */
 public class WorkerSchedule {
     private int wsid; // Mã định danh cho WorkerSchedule
-    private int scid; // Mã chiến dịch (Schedule Campaign ID)
-    private int eid;  // Mã nhân viên (Employee ID)
+    private Sdeplant sdeplant; // Mã chiến dịch (Schedule Campaign ID)
+    private Employee empolyee;  // Mã nhân viên (Employee ID)
     private int quantity; // Số lượng công việc được giao
 
     public int getWsid() {
@@ -22,20 +22,20 @@ public class WorkerSchedule {
         this.wsid = wsid;
     }
 
-    public int getScid() {
-        return scid;
+    public Sdeplant getSdeplant() {
+        return sdeplant;
     }
 
-    public void setScid(int scid) {
-        this.scid = scid;
+    public void setSdeplant(Sdeplant sdeplant) {
+        this.sdeplant = sdeplant;
     }
 
-    public int getEid() {
-        return eid;
+    public Employee getEmpolyee() {
+        return empolyee;
     }
 
-    public void setEid(int eid) {
-        this.eid = eid;
+    public void setEmpolyee(Employee empolyee) {
+        this.empolyee = empolyee;
     }
 
     public int getQuantity() {
@@ -45,5 +45,5 @@ public class WorkerSchedule {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
-}
+
+}  
